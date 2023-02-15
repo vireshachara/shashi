@@ -1,0 +1,94 @@
+<div class="card myForm" [ngClass]="formStatus">
+    <p class="main"><strong>Registration Form</strong></p>
+    <form [formGroup]="reactiveform" (ngSubmit)="onSubmit()" class="card1" autocomplete="on" >
+
+        <!-- ------------------------------FormGroup----------------------------------  -->
+        <div formGroupName="personalDetails">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Enter First Name" formControlName="firstname">
+            <div>
+                <small *ngIf="reactiveform.get('personalDetails.firstname').errors?.['required'] && reactiveform.get('personalDetails.firstname').touched">
+                    The First Name is a required field.</small>
+                <small *ngIf="reactiveform.get('personalDetails.firstname').errors?.['noSpaceAllowed']">The Firstname can not contain a space.</small>
+            </div>
+
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Enter Last Name" formControlName="lastname">
+            <div>
+                <small *ngIf="reactiveform.get('personalDetails.lastname').errors?.['required'] && reactiveform.get('personalDetails.lastname').touched">
+                    The Last Name is a required field.</small>
+                <small *ngIf="reactiveform.get('personalDetails.lastname').errors?.['noSpaceAllowed']">The Lastname can not contain a space.</small>
+            </div>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter Email" formControlName="email">
+            <div>
+                <small *ngIf="reactiveform.get('personalDetails.email').errors?.['required'] && reactiveform.get('personalDetails.email').touched">
+                    The Email is a required field.
+                </small>
+            </div>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter Password" formControlName="password">
+            <div>
+                <small
+                    *ngIf="reactiveform.get('personalDetails.password').invalid && reactiveform.get('personalDetails.password').touched">
+                    The Password is not Valid
+                </small>
+            </div>
+
+
+            <!-- <label for="confirmpassword">Confirm Password</label>
+        <input type="confirmpassword" id="confirmpassword" placeholder="Enter Confirm Password" formControlName="confirmpassword">
+        <div><small *ngIf="reactiveform.get('confirmpassword').invalid && reactiveform.get('confirmpassword').touched">
+                The Confirm Password is not Valid</small></div> -->
+        </div>
+
+        <label for="country">Country</label>
+        <select id="country" formControlName="country">
+            <option value="india">India</option>
+            <option value="australia">Australia</option>
+            <option value="canada">Canada</option>
+            <option value="china">China</option>
+            <option value="america">America</option>
+        </select>
+
+        <label for="gender">Gender :</label>
+        <input type="radio" id="male" value="male" formControlName="gender">
+        <label for="male">Male</label>
+        <input type="radio" id="female" value="female" formControlName="gender">
+        <label for="female">Female</label>
+        <input type="radio" id="other" value="other" formControlName="gender">
+        <label for="other">Other</label>
+        <br><br>
+
+        <div>
+            <label for="hobbies">Hobbies <i>(Optional)</i></label>
+            <div>
+                <label><input type="checkbox" value="sports" formControlName="hobbies">Sports</label>
+                <label><input type="checkbox" value="movies" formControlName="hobbies">Movies</label>
+                <label><input type="checkbox" value="music" formControlName="hobbies">Music</label>
+                <label><input type="checkbox" value="singing" formControlName="hobbies">Singing</label>
+            </div>
+        </div> <br>
+
+        <!-- ------------------------------FormArray----------------------------------  -->
+        <div formArrayName="skills">
+            <ng-container *ngFor="let skill of reactiveform.get('skills')['controls'], index as i">
+                <input class="formArray" type="text" placeholder="Enter Skill..." formControlName="{{i}}">
+            </ng-container>
+            <input type="button" value="+ Add skills" (click)="addSkills()">
+            <!-- <button (click)="addSkills()"> + Add Skills</button> -->
+        </div>
+        <div>
+            <input type="date">
+        </div>
+        <input type="submit" value="Submit" id="brn">
+    </form>
+</div>
+<router-outlet></router-outlet>
+
+
+<!-- [disabled]="!reactiveform.valid" -->
+
+
